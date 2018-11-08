@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1541341187 source:f:\debug\compiler\compile_experiment\scanner.cpp
+	"public_tools.h"
+	"process_constant_num.h"
+	"process_character.h"
+	"process_character_string.h"
+
+1541173788 source:f:\debug\compiler\compile_experiment\process_constant_num.cpp
+	"process_constant_num.h"
+
+1541172019 f:\debug\compiler\compile_experiment\process_constant_num.h
+	"public_tools.h"
+
+1541216215 f:\debug\compiler\compile_experiment\public_tools.h
+	<iostream>
+	<fstream>
+	<iomanip>
+	<streambuf>
+	<cstring>
+	<string>
+	<vector>
+	<cmath>
+
+1541176118 source:f:\debug\compiler\compile_experiment\process_character.cpp
+	"process_character.h"
+
+1541173368 f:\debug\compiler\compile_experiment\process_character.h
+	"public_tools.h"
+
+1541343502 source:f:\debug\compiler\compile_experiment\process_character_string.cpp
+	"process_character_string.h"
+
+1541175712 f:\debug\compiler\compile_experiment\process_character_string.h
+	"public_tools.h"
+
