@@ -49,6 +49,8 @@ bool process_character(string& buffer, unsigned int& cur_index, char& ch) {
                 break;
             case state_err:
                 return false;
+            default:
+                break;
         }
         cur_ch = buffer[cur_index ++];
         state = (*pc_state_shifter[state])(cur_ch, state);

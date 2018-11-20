@@ -1,14 +1,1 @@
-int main(void) {
-	int a = 1.234, d = 2e-1, c;
-	/*
-	if (a <= d) {
-		c = a;
-		a = d;
-		d = c;
-	}
-	*/
-	char ok[10] = "hello\\world!\n";
-	char x, y = '\n'; //hey
-	c = a + d;
-	return 0;
-}
+1.234 + (567+12*a*bbb)/10
