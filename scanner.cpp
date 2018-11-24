@@ -1,19 +1,9 @@
 #include "scanner.h"
 
-bool string_equals(string a, string b) {
-    return a.compare(b) == 0;
-}
-
 template <typename T>
-int vector_find(
-    vector<T> vec,
-    T key,
-    bool (* equals)(T, T),
-    unsigned int index_l,
-    unsigned int index_r
-    ) {
+int vector_find(vector<T> vec, T key, unsigned int index_l, unsigned int index_r) {
     for (unsigned int i = index_l; i <= index_r; i ++) {
-        if (equals(vec[i], key)) return i;
+        if (vec[i] == key) return i;
     }
     return -1;
 }
@@ -87,14 +77,14 @@ ScannerGet scanner(
         do current_char = buffer[cur_index ++];
         while (is_letter(current_char) or is_num(current_char) or current_char == '_');
         string tmp = buffer.substr(l_index, cur_index - l_index - 1);
-        int index = vector_find(KT, tmp, string_equals, 0, KT.size() - 1);
+        int index = vector_find(KT, tmp, 0, KT.size() - 1);
         if (index != -1) {
             result.error_type = 0;
             result.token.kind = 'K';
             result.token.index = index;
         } else {
             if (!IT.empty())
-            index = vector_find(IT, tmp, string_equals, 0, IT.size() - 1);
+            index = vector_find(IT, tmp, 0, IT.size() - 1);
             result.error_type = 0;
             result.token.kind = 'I';
             if (IT.empty() || index == -1) {
@@ -106,13 +96,13 @@ ScannerGet scanner(
         }
         cur_index --;
     } else { // 识别界符，查PT表
-        int index, indexes[3][2] = {{0, 21}, {22, 40}, {41, 42}};
+        int index, indexes[3][2] = {{0, 22}, {23, 42}, {43, 44}};
         result.error_type = -1; result.token.kind = 'P';
         result.error_log = "Symbol Error: incorrect delimiters";
         for (int i = 0; i < 3; i ++) {
             if (cur_index + i > buffer.length()) break;
             string key = buffer.substr(cur_index - 1, i + 1);
-            index = vector_find(PT, key, string_equals, indexes[i][0], indexes[i][1]);
+            index = vector_find(PT, key, indexes[i][0], indexes[i][1]);
             if (index != -1) {
                 result.error_type = 0;
                 result.token.index = index;

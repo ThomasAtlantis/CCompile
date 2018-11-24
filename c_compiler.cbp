@@ -36,6 +36,8 @@
 		<Unit filename="LL1.cpp" />
 		<Unit filename="LL1.h" />
 		<Unit filename="compile.cpp" />
+		<Unit filename="direct_generate.cpp" />
+		<Unit filename="direct_generate.h" />
 		<Unit filename="process_character.cpp" />
 		<Unit filename="process_character.h" />
 		<Unit filename="process_character_string.cpp" />
@@ -43,6 +45,8 @@
 		<Unit filename="process_constant_num.cpp" />
 		<Unit filename="process_constant_num.h" />
 		<Unit filename="public_tools.h" />
+		<Unit filename="quaternary.cpp" />
+		<Unit filename="quaternary.h" />
 		<Unit filename="scanner.cpp" />
 		<Unit filename="scanner.h" />
 		<Unit filename="test.cpp" />

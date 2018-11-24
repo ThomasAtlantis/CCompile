@@ -7,7 +7,7 @@ typedef enum {
 
 bool right_suffix(char ch) {
     vector <char> allow_suffix = { //算术常数允许的后继符集
-        ' ', '\n', '+', '-', '*', '/', '=', '>', '<', ',', '&', '|', '!', ']', ':', '?', ')', ';'
+        ' ', '\n', '+', '-', '*', '/', '=', '>', '<', ',', '&', '|', '!', '^', ']', ':', '?', ')', ';'
     };
     for (unsigned i = 0; i < allow_suffix.size(); i++) {
         if (ch == allow_suffix[i]) {

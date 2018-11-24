@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1542639203 source:f:\debug\compiler\compile_experiment\scanner.cpp
+1543043723 source:f:\debug\compiler\compile_experiment\scanner.cpp
 	"scanner.h"
 
-1541173788 source:f:\debug\compiler\compile_experiment\process_constant_num.cpp
+1542877343 source:f:\debug\compiler\compile_experiment\process_constant_num.cpp
 	"process_constant_num.h"
 
 1541172019 f:\debug\compiler\compile_experiment\process_constant_num.h
@@ -36,10 +36,12 @@
 
 1542618139 source:f:\debug\compiler\compile_experiment\test.cpp
 
-1542641322 source:f:\debug\compiler\compile_experiment\compile.cpp
+1543049061 source:f:\debug\compiler\compile_experiment\compile.cpp
+	"quaternary.h"
 	"scanner.h"
 	"grammar.h"
 	"LL1.h"
+	"direct_generate.h"
 
 1542620438 f:\debug\compiler\compile_experiment\scanner.h
 	"public_tools.h"
@@ -50,12 +52,28 @@
 1542620308 source:f:\debug\compiler\compile_experiment\grammar.cpp
 	"Grammar.h"
 
-1542620421 f:\debug\compiler\compile_experiment\grammar.h
+1542726591 f:\debug\compiler\compile_experiment\grammar.h
 	"public_tools.h"
 
 1542620398 f:\debug\compiler\compile_experiment\ll1.h
 	"Grammar.h"
 
-1542640036 source:f:\debug\compiler\compile_experiment\ll1.cpp
+1543044747 source:f:\debug\compiler\compile_experiment\ll1.cpp
 	"LL1.h"
+
+1543048047 f:\debug\compiler\compile_experiment\quaternary.h
+	"public_tools.h"
+
+1543048347 source:f:\debug\compiler\compile_experiment\quaternary.cpp
+	"quaternary.h"
+
+1543049778 f:\debug\compiler\compile_experiment\direct_generate.h
+	"public_tools.h"
+	"scanner.h"
+	"Grammar.h"
+	"quaternary.h"
+	"direct_generate.h"
+
+1543048080 source:f:\debug\compiler\compile_experiment\direct_generate.cpp
+	"direct_generate.h"
 

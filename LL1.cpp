@@ -30,7 +30,17 @@ LL1::LL1(Grammar& grammar): G(grammar) {
 LL1::~LL1() {}
 
 bool LL1::is_available() {
-    ///TODO 检查是否为LL(1)文法
+    for (Grammar::Production_iter iter_1 = G.G.begin(); iter_1 != G.G.end(); iter_1 ++) {
+        if ((iter_1->second).size() > 1) {
+            set<string> s;
+            for (Grammar::Right_list_iter iter_2 = (iter_1->second).begin(); iter_2 != (iter_1->second).end(); iter_2 ++) {
+                set<string> tmp = G.select_set_of(iter_1->first, *iter_2);
+                int old_size = s.size();
+                s.insert(tmp.begin(), tmp.end());
+                if (s.size() < old_size + tmp.size()) return false;
+            }
+        }
+    }
     return true;
 }
 
@@ -132,7 +142,7 @@ bool LL1::check(vector <Token> tokens) {
     vector<string> syn;
     syn.push_back("#");
     syn.push_back(G.S);
-    Token t = {'P', 0};
+    Token t = {'#', 0};
     tokens.push_back(t);
 
 //    for (unsigned int i = 0; i < syn.size(); i ++) {
@@ -151,10 +161,11 @@ bool LL1::check(vector <Token> tokens) {
         switch (token.kind) {
             case 'K': w = G.KT[token.index]; break;
             case 'P': w = G.PT[token.index]; break;
-            case 'I':
-            case 'C': w = "I"; break;
+            case 'I': w = "/I"; break;
+            case 'C': w = "/C"; break;
             case 'c': w = G.cT[token.index]; break;
             case 'S': w = G.ST[token.index]; break;
+            case '#': w = "#"; break;
         }
         Analyze_table_item* p = get_op(syn.back(), w);
         if (!p || (p->stack_op).empty()) {
