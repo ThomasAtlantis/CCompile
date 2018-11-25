@@ -3,6 +3,7 @@
 #include "grammar.h"
 #include "LL1.h"
 #include "direct_generate.h"
+#include "recursive_subprograms.h"
 
 void compile(string file_name) {
     ifstream source_file(file_name.c_str());
@@ -16,10 +17,10 @@ void compile(string file_name) {
     };
     vector <string> PT = { // 界符表
         "#", "+", "-", "*", "/", "=", ">", "<", ",", ".", "&", "|", "!", "^", ";", "{", "}", "[", "]", ":",
-        "?", "(", ")", "%", //0 - 22 单字符
+        "?", "(", ")", "%", //0 - 23 单字符
         "+=", "-=", "*=", "/=", "%=", "<=", ">=", "==", "&=", "|=", "!=", "^=", "^|", "&&", "||", "<<",
-        ">>", "//", "/*", "*/", // 23 - 42 两字符
-        "<<=", ">>=" // 43 - 44 三字符
+        ">>", "//", "/*", "*/", // 24 - 43 两字符
+        "<<=", ">>=" // 44 - 45 三字符
     }; // 必须保证“#”在第一位
     vector <string> IT; // 标识符表
     vector <char  > cT; // 字符表
@@ -53,10 +54,7 @@ void compile(string file_name) {
     */
     Grammar G(KT, PT, IT, cT, ST, CT);
     G.set_start("E");
-    G.add_production("E", "T E1");
-    G.add_production("E1", "^ T E1");
-    G.add_production("E1", "epsilon");
-    G.add_production("T", "F T1");
+    G.add_production("E", "F T1");
     G.add_production("T1", "+ F T1");
     G.add_production("T1", "- F T1");
     G.add_production("T1", "epsilon");
@@ -64,8 +62,11 @@ void compile(string file_name) {
     G.add_production("F1", "* H F1");
     G.add_production("F1", "/ H F1");
     G.add_production("F1", "epsilon");
-    G.add_production("H", "- K");
-    G.add_production("H", "K");
+    G.add_production("H", "H1 J");
+    G.add_production("J", "^ H1");
+    G.add_production("J", "epsilon");
+    G.add_production("H1", "- K");
+    G.add_production("H1", "K");
     G.add_production("K", "/I");
     G.add_production("K", "/C");
     G.add_production("K", "( E )");
@@ -82,11 +83,20 @@ void compile(string file_name) {
         }
     }
     */
+    /* LL1
     LL1 ll1(G);
     if (ll1.available && ll1.check(tokens)) {
         Direct_Gen d(G);
         cout << "Result of Expression: " << d.execute(d.translate(tokens)) << endl;
     }
+    //*/
+    //* Recursive Subprograms
+    Recursub rec(G);
+    if (rec.available && rec.check(tokens)) {
+        Direct_Gen d(G);
+        cout << "Result of Expression: " << d.execute(d.translate(tokens)) << endl;
+    }
+    //*/
 }
 int main() {
     compile("test.src");

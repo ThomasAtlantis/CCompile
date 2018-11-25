@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1543043723 source:f:\debug\compiler\compile_experiment\scanner.cpp
+1543113843 source:f:\debug\compiler\compile_experiment\scanner.cpp
 	"scanner.h"
 
 1542877343 source:f:\debug\compiler\compile_experiment\process_constant_num.cpp
@@ -36,12 +36,13 @@
 
 1542618139 source:f:\debug\compiler\compile_experiment\test.cpp
 
-1543049061 source:f:\debug\compiler\compile_experiment\compile.cpp
+1543113822 source:f:\debug\compiler\compile_experiment\compile.cpp
 	"quaternary.h"
 	"scanner.h"
 	"grammar.h"
 	"LL1.h"
 	"direct_generate.h"
+	"recursive_subprograms.h"
 
 1542620438 f:\debug\compiler\compile_experiment\scanner.h
 	"public_tools.h"
@@ -58,7 +59,7 @@
 1542620398 f:\debug\compiler\compile_experiment\ll1.h
 	"Grammar.h"
 
-1543044747 source:f:\debug\compiler\compile_experiment\ll1.cpp
+1543071041 source:f:\debug\compiler\compile_experiment\ll1.cpp
 	"LL1.h"
 
 1543048047 f:\debug\compiler\compile_experiment\quaternary.h
@@ -74,6 +75,14 @@
 	"quaternary.h"
 	"direct_generate.h"
 
-1543048080 source:f:\debug\compiler\compile_experiment\direct_generate.cpp
+1543049876 source:f:\debug\compiler\compile_experiment\direct_generate.cpp
 	"direct_generate.h"
+
+1543113713 source:f:\debug\compiler\compile_experiment\recursive_subprograms.cpp
+	"recursive_subprograms.h"
+
+1543116880 f:\debug\compiler\compile_experiment\recursive_subprograms.h
+	"public_tools.h"
+	"Grammar.h"
+	"scanner.h"
 

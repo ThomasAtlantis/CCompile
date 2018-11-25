@@ -2,29 +2,30 @@
 
 LL1::LL1(Grammar& grammar): G(grammar) {
     // 注意在此程序中必须保证“#”在第一位
-    currents.push_back("#");
-    stack_tops.push_back("#");
-    for (Grammar::Production_iter iter_1 = grammar.G.begin(); iter_1 != grammar.G.end(); iter_1++) {
-        stack_tops.push_back(iter_1->first);
-        for (Grammar::Right_list_iter iter_2 = iter_1->second.begin(); iter_2 != iter_1->second.end(); iter_2 ++) {
-            for (Grammar::Right_symbol_iter iter_3 = iter_2->begin(); iter_3 != iter_2->end(); iter_3 ++) {
-                if (grammar.symbol_type(*iter_3) == -1) {
-                    if (!count(currents.begin(), currents.end(), *iter_3))
-                        currents.push_back(*iter_3);
-                    if (iter_3 != iter_2->begin() && !count(stack_tops.begin(), stack_tops.end(), *iter_3))
-                        stack_tops.push_back(*iter_3);
+    available = false;
+    if (is_available()) {
+        available = true;
+
+        currents.push_back("#");
+        stack_tops.push_back("#");
+        for (Grammar::Production_iter iter_1 = grammar.G.begin(); iter_1 != grammar.G.end(); iter_1++) {
+            stack_tops.push_back(iter_1->first);
+            for (Grammar::Right_list_iter iter_2 = iter_1->second.begin(); iter_2 != iter_1->second.end(); iter_2 ++) {
+                for (Grammar::Right_symbol_iter iter_3 = iter_2->begin(); iter_3 != iter_2->end(); iter_3 ++) {
+                    if (grammar.symbol_type(*iter_3) == -1) {
+                        if (!count(currents.begin(), currents.end(), *iter_3))
+                            currents.push_back(*iter_3);
+                        if (iter_3 != iter_2->begin() && !count(stack_tops.begin(), stack_tops.end(), *iter_3))
+                            stack_tops.push_back(*iter_3);
+                    }
                 }
             }
         }
-    }
-    table = new Analyze_table_item* [stack_tops.size()];
-    for (unsigned int i = 0; i < stack_tops.size(); i ++) {
-        table[i] = new Analyze_table_item [currents.size()];
-    }
-    available = false;
-    if (is_available()) {
+        table = new Analyze_table_item* [stack_tops.size()];
+        for (unsigned int i = 0; i < stack_tops.size(); i ++) {
+            table[i] = new Analyze_table_item [currents.size()];
+        }
         initialize_table();
-        available = true;
     }
 }
 LL1::~LL1() {}
@@ -34,11 +35,21 @@ bool LL1::is_available() {
         if ((iter_1->second).size() > 1) {
             set<string> s;
             for (Grammar::Right_list_iter iter_2 = (iter_1->second).begin(); iter_2 != (iter_1->second).end(); iter_2 ++) {
+                if (iter_2->front() == iter_1->first) {
+                    cout << "Left Recursion" << endl;
+                    return false;
+                }
                 set<string> tmp = G.select_set_of(iter_1->first, *iter_2);
                 int old_size = s.size();
                 s.insert(tmp.begin(), tmp.end());
-                if (s.size() < old_size + tmp.size()) return false;
+                if (s.size() < old_size + tmp.size()) {
+                    cout << "Intersactive Select-set" << endl;
+                    return false;
+                }
             }
+        } else if ((iter_1->second)[0][0] == iter_1->first) {
+            cout << "Left Recursion" << endl;
+            return false;
         }
     }
     return true;
@@ -70,29 +81,29 @@ bool LL1::set_op(string stack_top, string current, vector<string> stack_op, char
     return true;
 }
 
-    void LL1::print_table() {
+void LL1::print_table() {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE_ON_BLUE);
+    cout << setw(14) << " ";
+    for (unsigned int i = 0; i < currents.size(); i ++) {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE_ON_BLUE);
-        cout << setw(14) << " ";
-        for (unsigned int i = 0; i < currents.size(); i ++) {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE_ON_BLUE);
-            cout << setw(14) << currents[i];
+        cout << setw(14) << currents[i];
+    }
+    cout << endl;
+    for (unsigned int i = 0; i < stack_tops.size(); i ++) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE_ON_BLUE);
+        cout << setw(14) << stack_tops[i];
+        for (unsigned int j = 0; j < currents.size(); j ++) {
+            if (!((j&1)^(i&1))) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE_ON_BLACK);
+            else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK_ON_WHITE);
+            if (!table[i][j].stack_op.empty()) {
+                cout << setw(10) << vector_join(" ", table[i][j].stack_op.begin(), table[i][j].stack_op.end());
+                cout << ", " << setw(2) << table[i][j].read_op;
+            } else cout << setw(14) << " ";
         }
         cout << endl;
-        for (unsigned int i = 0; i < stack_tops.size(); i ++) {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE_ON_BLUE);
-            cout << setw(14) << stack_tops[i];
-            for (unsigned int j = 0; j < currents.size(); j ++) {
-                if (!((j&1)^(i&1))) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE_ON_BLACK);
-                else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK_ON_WHITE);
-                if (!table[i][j].stack_op.empty()) {
-                    cout << setw(10) << vector_join(" ", table[i][j].stack_op.begin(), table[i][j].stack_op.end());
-                    cout << ", " << setw(2) << table[i][j].read_op;
-                } else cout << setw(14) << " ";
-            }
-            cout << endl;
-        }
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK_ON_WHITE);
     }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK_ON_WHITE);
+}
 
 void LL1::initialize_table() {
     set_op("#", "#", str_split("OK", " "), '\0');

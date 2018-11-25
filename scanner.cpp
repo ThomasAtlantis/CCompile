@@ -96,7 +96,7 @@ ScannerGet scanner(
         }
         cur_index --;
     } else { // 识别界符，查PT表
-        int index, indexes[3][2] = {{0, 22}, {23, 42}, {43, 44}};
+        int index, indexes[3][2] = {{0, 23}, {24, 43}, {44, 45}};
         result.error_type = -1; result.token.kind = 'P';
         result.error_log = "Symbol Error: incorrect delimiters";
         for (int i = 0; i < 3; i ++) {

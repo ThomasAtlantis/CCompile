@@ -47,6 +47,8 @@
 		<Unit filename="public_tools.h" />
 		<Unit filename="quaternary.cpp" />
 		<Unit filename="quaternary.h" />
+		<Unit filename="recursive_subprograms.cpp" />
+		<Unit filename="recursive_subprograms.h" />
 		<Unit filename="scanner.cpp" />
 		<Unit filename="scanner.h" />
 		<Unit filename="test.cpp" />
