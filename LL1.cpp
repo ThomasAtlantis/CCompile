@@ -109,7 +109,13 @@ void LL1::initialize_table() {
     set_op("#", "#", str_split("OK", " "), '\0');
     for (vector<string>::iterator iter = stack_tops.begin() + 1; iter != stack_tops.end(); iter++) {
         if (G.symbol_type(*iter) != 1) {
-            set_op(*iter, *iter, str_split("epsilon", " "), 'N');
+            if ((*iter).find("qua") == 0) {
+                for (auto cur_it: currents) {
+                    set_op(*iter, cur_it, str_split("epsilon", " "), 'P');
+                }
+            } else {
+                set_op(*iter, *iter, str_split("epsilon", " "), 'N');
+            }
         } else {
             Grammar::Production_iter p = G.G.find(*iter);
             for (Grammar::Right_list_iter it = (p->second).begin(); it != (p->second).end(); it ++) {
@@ -149,24 +155,16 @@ void LL1::initialize_table() {
     }
 }
 
-bool LL1::check(vector <Token> tokens) {
+vector<Quarternary> LL1::check_and_translate(vector <Token> tokens) {
+    vector<Quarternary> Qs;
+    vector<Quarternary> error;
+    vector<double*> operands;
     vector<string> syn;
     syn.push_back("#");
     syn.push_back(G.S);
     Token t = {'#', 0};
     tokens.push_back(t);
-
-//    for (unsigned int i = 0; i < syn.size(); i ++) {
-//        cout << "[" << syn[i] << "] ";
-//    }
-//    cout << "\t";
-//    for (unsigned int i = 0; i < tokens.size(); i ++) {
-//        cout << "<" << tokens[i].kind << ", " << tokens[i].index << "> ";
-//    }
-//    cout << endl;
-
     Token token = tokens.front();
-    tokens.erase(tokens.begin());
     string w;
     while (1) {
         switch (token.kind) {
@@ -181,17 +179,40 @@ bool LL1::check(vector <Token> tokens) {
         Analyze_table_item* p = get_op(syn.back(), w);
         if (!p || (p->stack_op).empty()) {
             cout << "Syntax Error(?): wrong experession" << endl;
-            return false;
+            return error;
         } else if (p->stack_op[0] == "OK") {
-            return true;
+            return Qs;
         } else {
             syn.pop_back();
             if (p->stack_op[0] != "epsilon")
                 syn.insert(syn.end(), (p->stack_op).begin(), (p->stack_op).end());
+            if (syn.back().length() >= 4 && syn.back().find("qua") == 0) {
+                char operat = syn.back()[3];
+                if (operat == 'p') {
+                    operands.push_back(&G.CT[token.index]);
+                } else if (operat == '.') {
+                    double* res_1 = new double(0);
+                    double* res_2 = operands.back();
+                    double* res = new double;
+                    operands.pop_back();
+                    Quarternary Q = {'-', res_1, res_2, res};
+                    Qs.push_back(Q);
+                    operands.push_back(res);
+                } else {
+                    double* res_2 = operands.back();
+                    operands.pop_back();
+                    double* res_1 = operands.back();
+                    operands.pop_back();
+                    double* res = new double;
+                    Quarternary Q = {operat, res_1, res_2, res};
+                    Qs.push_back(Q);
+                    operands.push_back(res);
+                }
+            }
             if (p->read_op == 'N') {
-                if (tokens.empty()) return false;
-                token = tokens.front();
+                if (tokens.empty()) return error;
                 tokens.erase(tokens.begin());
+                token = tokens.front();
             }
 //            for (unsigned int i = 0; i < syn.size(); i ++) {
 //                cout << "[" << syn[i] << "] ";

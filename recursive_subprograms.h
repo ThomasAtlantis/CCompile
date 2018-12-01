@@ -4,6 +4,7 @@
 #include "public_tools.h"
 #include "Grammar.h"
 #include "scanner.h"
+#include "quaternary.h"
 
 class Recursub {
 private:
@@ -15,8 +16,8 @@ public:
     Recursub(Grammar& G);
     ~Recursub();
     bool is_available();
-    bool check(vector<Token> tokens);
-    bool subprogram(vector<Token>& tokens, string left, vector<int>& layers);
+    vector<Quarternary> check_and_translate(vector<Token> tokens);
+    bool subprogram(vector<Token>& tokens, string left, vector<Quarternary>& Qs, vector<double*>& operands, vector<int>& layers);
 };
 
 #endif // RECURSIVE_SUBPROGRAMS_H_INCLUDED

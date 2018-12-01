@@ -45,7 +45,7 @@ string Recursub::token2str(Token token) {
     return w;
 }
 
-bool Recursub::subprogram(vector<Token>& tokens, string left, vector<int>& layers) {
+bool Recursub::subprogram(vector<Token>& tokens, string left, vector<Quarternary>& Qs, vector<double*>& operands, vector<int>& layers) {
     /// PRINT GRAMMAR TREE
     cout << "   ";
     for (int i = 0; i < layers.size() - 1; i ++) if (layers[i]) cout << "   "; else cout << "©¦  ";
@@ -60,18 +60,46 @@ bool Recursub::subprogram(vector<Token>& tokens, string left, vector<int>& layer
         set<string> select = G.select_set_of(p->first, *rl);
         string w = token2str(tokens.front());
         if (!select.count(w)) continue;
+        Token token_sav;
         for (Grammar::Right_symbol_iter rs = rl->begin(); rs != rl->end(); rs ++) {
             if (G.symbol_type(*rs) == 1) {
                 /// PRINT GRAMMAR TREE
                 if (rs != rl->end() - 1) layers.push_back(0); else layers.push_back(1);
                 /// END PRINT GRAMMAR TREE
-                if (!subprogram(tokens, *rs, layers)) return false;
+
+                if (!subprogram(tokens, *rs, Qs, operands, layers)) return false;
+
                 /// PRINT GRAMMAR TREE
                 layers.pop_back();
                 /// END PRINT GRAMMAR TREE
                 w = token2str(tokens.front());
             } else {
+                if ((*rs).find("qua") == 0) {
+                    char operat = (*rs)[3];
+                    if (operat == 'p') {
+                        operands.push_back(&G.CT[token_sav.index]);
+                    } else if (operat == '.') {
+                        double* res_1 = new double(0);
+                        double* res_2 = operands.back();
+                        double* res = new double;
+                        operands.pop_back();
+                        Quarternary Q = {'-', res_1, res_2, res};
+                        Qs.push_back(Q);
+                        operands.push_back(res);
+                    } else {
+                        double* res_2 = operands.back();
+                        operands.pop_back();
+                        double* res_1 = operands.back();
+                        operands.pop_back();
+                        double* res = new double;
+                        Quarternary Q = {operat, res_1, res_2, res};
+                        Qs.push_back(Q);
+                        operands.push_back(res);
+                    }
+                    continue;
+                }
                 if (w == *rs) {
+                    token_sav = tokens.front();
                     tokens.erase(tokens.begin());
                     /// PRINT GRAMMAR TREE
                     cout << setw(3) << *rs;
@@ -87,9 +115,17 @@ bool Recursub::subprogram(vector<Token>& tokens, string left, vector<int>& layer
 }
 
 
-bool Recursub::check(vector<Token> tokens) {
+vector<Quarternary> Recursub::check_and_translate(vector<Token> tokens) {
     Token token = {'#', 0};
     tokens.push_back(token);
     vector<int> layers = {1};
-    return subprogram(tokens, G.S, layers);
+    vector<Quarternary> Qs;
+    vector<Quarternary> error;
+    vector<double*> operands;
+    if (subprogram(tokens, G.S, Qs, operands, layers)) {
+        return Qs;
+    } else {
+        cout << "Syntax Error(?): wrong experession" << endl;
+        return error;
+    }
 }

@@ -8,11 +8,12 @@
 1541172019 f:\debug\compiler\compile_experiment\process_constant_num.h
 	"public_tools.h"
 
-1542620451 f:\debug\compiler\compile_experiment\public_tools.h
+1543626852 f:\debug\compiler\compile_experiment\public_tools.h
 	<windows.h>
 	<iostream>
 	<fstream>
 	<iomanip>
+	<sstream>
 	<streambuf>
 	<cstring>
 	<string>
@@ -36,13 +37,15 @@
 
 1542618139 source:f:\debug\compiler\compile_experiment\test.cpp
 
-1543113822 source:f:\debug\compiler\compile_experiment\compile.cpp
+1543632430 source:f:\debug\compiler\compile_experiment\compile.cpp
 	"quaternary.h"
 	"scanner.h"
 	"grammar.h"
 	"LL1.h"
 	"direct_generate.h"
 	"recursive_subprograms.h"
+	"quaternary.h"
+	"LR1.h"
 
 1542620438 f:\debug\compiler\compile_experiment\scanner.h
 	"public_tools.h"
@@ -56,10 +59,12 @@
 1542726591 f:\debug\compiler\compile_experiment\grammar.h
 	"public_tools.h"
 
-1542620398 f:\debug\compiler\compile_experiment\ll1.h
+1543630426 f:\debug\compiler\compile_experiment\ll1.h
+	"public_tools.h"
 	"Grammar.h"
+	"quaternary.h"
 
-1543071041 source:f:\debug\compiler\compile_experiment\ll1.cpp
+1543631449 source:f:\debug\compiler\compile_experiment\ll1.cpp
 	"LL1.h"
 
 1543048047 f:\debug\compiler\compile_experiment\quaternary.h
@@ -78,11 +83,16 @@
 1543049876 source:f:\debug\compiler\compile_experiment\direct_generate.cpp
 	"direct_generate.h"
 
-1543113713 source:f:\debug\compiler\compile_experiment\recursive_subprograms.cpp
+1543634665 source:f:\debug\compiler\compile_experiment\recursive_subprograms.cpp
 	"recursive_subprograms.h"
 
-1543116880 f:\debug\compiler\compile_experiment\recursive_subprograms.h
+1543633005 f:\debug\compiler\compile_experiment\recursive_subprograms.h
 	"public_tools.h"
 	"Grammar.h"
 	"scanner.h"
+	"quaternary.h"
+
+1543625231 source:f:\debug\compiler\compile_experiment\lr1.cpp
+
+1543625218 f:\debug\compiler\compile_experiment\lr1.h
 

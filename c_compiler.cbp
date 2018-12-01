@@ -35,6 +35,8 @@
 		<Unit filename="Grammar.h" />
 		<Unit filename="LL1.cpp" />
 		<Unit filename="LL1.h" />
+		<Unit filename="LR1.cpp" />
+		<Unit filename="LR1.h" />
 		<Unit filename="compile.cpp" />
 		<Unit filename="direct_generate.cpp" />
 		<Unit filename="direct_generate.h" />

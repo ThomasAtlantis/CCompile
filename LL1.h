@@ -1,7 +1,9 @@
 #ifndef LL1_H_INCLUDED
 #define LL1_H_INCLUDED
 
+#include "public_tools.h"
 #include "Grammar.h"
+#include "quaternary.h"
 
 class LL1 {
 public:
@@ -23,7 +25,7 @@ public:
     bool set_op(string stack_top, string current, vector<string> stack_op, char read_op);
     void print_table();
     void initialize_table();
-    bool check(vector <Token> tokens);
+    vector<Quarternary> check_and_translate(vector <Token> tokens);
 };
 
 #endif // LL1_H_INCLUDED

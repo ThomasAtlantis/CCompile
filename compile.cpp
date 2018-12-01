@@ -4,6 +4,8 @@
 #include "LL1.h"
 #include "direct_generate.h"
 #include "recursive_subprograms.h"
+#include "quaternary.h"
+#include "LR1.h"
 
 void compile(string file_name) {
     ifstream source_file(file_name.c_str());
@@ -55,21 +57,34 @@ void compile(string file_name) {
     Grammar G(KT, PT, IT, cT, ST, CT);
     G.set_start("E");
     G.add_production("E", "F T1");
-    G.add_production("T1", "+ F T1");
-    G.add_production("T1", "- F T1");
+    G.add_production("T1", "+ F qua+ T1");
+    G.add_production("T1", "- F qua- T1");
     G.add_production("T1", "epsilon");
     G.add_production("F", "H F1");
-    G.add_production("F1", "* H F1");
-    G.add_production("F1", "/ H F1");
+    G.add_production("F1", "* H qua* F1");
+    G.add_production("F1", "/ H qua/ F1");
     G.add_production("F1", "epsilon");
-    G.add_production("H", "H1 J");
-    G.add_production("J", "^ H1");
+    G.add_production("H", "H1");
+    G.add_production("H", "- H1 qua.");
+    G.add_production("H1", "K1 J");
+    G.add_production("J", "^ K1 qua^");
     G.add_production("J", "epsilon");
-    G.add_production("H1", "- K");
+    G.add_production("K2", "- K1 qua.");
+    G.add_production("K2", "K1");
+    G.add_production("K1", "/I quap");
+    G.add_production("K1", "/C quap");
+    G.add_production("K1", "( E )");
+
+    /*
+    G.add_production("H", "H1 J");
+    G.add_production("J", "^ H1 qua^");
+    G.add_production("J", "epsilon");
+    G.add_production("H1", "- K qua.");
     G.add_production("H1", "K");
-    G.add_production("K", "/I");
-    G.add_production("K", "/C");
+    G.add_production("K", "/I quap");
+    G.add_production("K", "/C quap");
     G.add_production("K", "( E )");
+    */
     /*
     cout << G << endl;
     for (Grammar::Production_iter it_1 = G.G.begin(); it_1 != G.G.end(); it_1 ++) {
@@ -83,16 +98,30 @@ void compile(string file_name) {
         }
     }
     */
-    /* LL1
+    //* LL1
     LL1 ll1(G);
-    if (ll1.available && ll1.check(tokens)) {
-        Direct_Gen d(G);
-        cout << "Result of Expression: " << d.execute(d.translate(tokens)) << endl;
+    if (ll1.available) {
+        vector<Quarternary> Qs = ll1.check_and_translate(tokens);
+        if (!Qs.empty()) {
+            Direct_Gen d(G);
+            cout << "Result of Expression: " << d.execute(Qs) << endl;
+        }
     }
     //*/
-    //* Recursive Subprograms
+
+    /* Recursive Subprograms
     Recursub rec(G);
-    if (rec.available && rec.check(tokens)) {
+    if (rec.available) {
+        vector<Quarternary> Qs = rec.check_and_translate(tokens);
+        if (!Qs.empty()) {
+            Direct_Gen d(G);
+            cout << "Result of Expression: " << d.execute(Qs) << endl;
+        }
+    }
+    //*/
+    /*
+    LR1 lr1(G);
+    if (lr1.available && lr1.check(tokens)) {
         Direct_Gen d(G);
         cout << "Result of Expression: " << d.execute(d.translate(tokens)) << endl;
     }
