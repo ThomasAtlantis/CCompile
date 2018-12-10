@@ -18,12 +18,12 @@ public:
     string S;
     map<string, set<string>> firsts;
     map<string, set<string>> follows;
-    vector<string>& KT;
-    vector<string>& PT;
-    vector<string>& IT;
-    vector<char>& cT;
-    vector<string>& ST;
-    vector<double>& CT;
+    vector<string>& KT; // 关键字表
+    vector<string>& PT; // 界符表
+    vector<string>& IT; // 标识符表
+    vector<char>& cT;   // 字符常量表
+    vector<string>& ST; // 字符串常量表
+    vector<double>& CT; // 算术常量表
 
     // 构造函数和析构函数
     Grammar(

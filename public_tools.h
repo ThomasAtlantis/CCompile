@@ -15,9 +15,9 @@
 #include <map>
 #include <set>
 
-#define is_num(ch) (ch>='0'&&ch<='9')
-#define is_letter(ch) ((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z'))
-#define is_blank(ch) (ch==' '||ch=='\n'||ch=='\t'||ch=='\r')
+#define is_num(ch) (ch>='0'&&ch<='9') // ÅÐ¶Ï×Ö·ûÊÇ·ñÎªÊý×Ö
+#define is_letter(ch) ((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')) // ÅÐ¶Ï×Ö·ûÊÇ·ñÎª×ÖÄ¸
+#define is_blank(ch) (ch==' '||ch=='\n'||ch=='\t'||ch=='\r') // ÅÐ¶Ï×Ö·ûÊÇ·ñÎª¿Õ°×·û
 
 #define WHITE_ON_BLACK FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED|FOREGROUND_INTENSITY
 #define BLACK_ON_WHITE BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED|BACKGROUND_INTENSITY
@@ -25,8 +25,8 @@
 using namespace std;
 
 typedef struct {
-    char kind;
-    unsigned int index;
-} Token;
+    char kind; // ·ûºÅ±íÀàÐÍ
+    unsigned int index; // ·ûºÅ±íÎ»ÖÃË÷Òý
+} Token; // ´Ê·¨·ÖÎöÆ÷·µ»ØToken
 
 #endif // PUBLIC_TOOLS_H_INCLUDED

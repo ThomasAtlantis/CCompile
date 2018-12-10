@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1543113843 source:f:\debug\compiler\compile_experiment\scanner.cpp
+1544025284 source:f:\debug\compiler\compile_experiment\scanner.cpp
 	"scanner.h"
 
-1542877343 source:f:\debug\compiler\compile_experiment\process_constant_num.cpp
+1544024924 source:f:\debug\compiler\compile_experiment\process_constant_num.cpp
 	"process_constant_num.h"
 
 1541172019 f:\debug\compiler\compile_experiment\process_constant_num.h
 	"public_tools.h"
 
-1543626852 f:\debug\compiler\compile_experiment\public_tools.h
+1544023247 f:\debug\compiler\compile_experiment\public_tools.h
 	<windows.h>
 	<iostream>
 	<fstream>
@@ -37,7 +37,7 @@
 
 1542618139 source:f:\debug\compiler\compile_experiment\test.cpp
 
-1543632430 source:f:\debug\compiler\compile_experiment\compile.cpp
+1544341002 source:f:\debug\compiler\compile_experiment\compile.cpp
 	"quaternary.h"
 	"scanner.h"
 	"grammar.h"
@@ -47,7 +47,7 @@
 	"quaternary.h"
 	"LR1.h"
 
-1542620438 f:\debug\compiler\compile_experiment\scanner.h
+1544021735 f:\debug\compiler\compile_experiment\scanner.h
 	"public_tools.h"
 	"process_constant_num.h"
 	"process_character.h"
@@ -56,10 +56,10 @@
 1542620308 source:f:\debug\compiler\compile_experiment\grammar.cpp
 	"Grammar.h"
 
-1542726591 f:\debug\compiler\compile_experiment\grammar.h
+1544346217 f:\debug\compiler\compile_experiment\grammar.h
 	"public_tools.h"
 
-1543630426 f:\debug\compiler\compile_experiment\ll1.h
+1544346175 f:\debug\compiler\compile_experiment\ll1.h
 	"public_tools.h"
 	"Grammar.h"
 	"quaternary.h"
@@ -83,7 +83,7 @@
 1543049876 source:f:\debug\compiler\compile_experiment\direct_generate.cpp
 	"direct_generate.h"
 
-1543634665 source:f:\debug\compiler\compile_experiment\recursive_subprograms.cpp
+1544343260 source:f:\debug\compiler\compile_experiment\recursive_subprograms.cpp
 	"recursive_subprograms.h"
 
 1543633005 f:\debug\compiler\compile_experiment\recursive_subprograms.h
